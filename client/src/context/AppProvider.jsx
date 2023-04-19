@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useState, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppContext from './AppContext';
-import postLogin from '../axios/postLogin';
+import post from '../services/postLogin';
 
 function AppProvider({ children }) {
   const navigate = useNavigate();
@@ -16,13 +16,19 @@ function AppProvider({ children }) {
   }, [queryData]);
 
   const handleSubmit = useCallback(async () => {
-    const data = await postLogin('/queryData', { queryData });
+    const data = await post('/login', { queryData });
+    console.log(data);
+    navigate('/home');
+  });
+
+  const handleRegister = useCallback(async () => {
+    const data = await post('/register', queryData);
     console.log(data);
     navigate('/home');
   });
   const contextValue = useMemo(() => ({
-    queryData, handleChange, handleSubmit,
-  }), [handleChange, queryData, handleSubmit]);
+    queryData, handleChange, handleSubmit, handleRegister,
+  }), [handleChange, queryData, handleSubmit, handleRegister]);
   return (
     <AppContext.Provider
       value={contextValue}
