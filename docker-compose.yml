@@ -1,0 +1,34 @@
+version: '3.9'
+services:
+  frontend:
+    container_name: client_frontend
+    build: ./client
+    ports:
+      - 3000:3000
+    platform: linux/x86_64
+    working_dir: /client
+    depends_on:
+      - backend
+
+  backend:
+    container_name: server_backend
+    build: ./server
+    ports:
+      - 3001:3001
+    platform: linux/x86_64
+    working_dir: /server
+    command: dev
+    volumes:
+      - ./server/src:/server/src
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/CarShop
+      - PORT=3001
+
+  mongodb:
+    image: mongo:5.0.7
+    container_name: nerdivia_db
+    restart: always
+    ports:
+      - 27017:27017
