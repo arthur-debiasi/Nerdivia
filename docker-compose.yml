@@ -1,46 +1,33 @@
+version: '3.9'
 services:
-  frontend: 
+  frontend:
+    container_name: client_frontend
     build: ./client
     ports:
       - 3000:3000
     platform: linux/x86_64
     working_dir: /client
     depends_on:
-      - backend:
-        condition: service_healthy
+      - backend
 
-    healthcheck:
-      test: ["cmd", "lsof", "-t", "-i:3000"]
-      timeout: 10s
-      retries: 5
   backend:
     container_name: server_backend
     build: ./server
     ports:
       - 3001:3001
     platform: linux/x86_64
-    working_dir: /client
+    working_dir: /server
     command: dev
     volumes:
       - ./server/src:/server/src
     depends_on:
-       db:
-        condition: service_healthy
+      - mongodb
     environment:
-      - DB_USER=root
-      - DB_PASS=123456
-      - DB_HOST=db
-      - DB_PORT=27017
-    healthcheck:
-      test: ["CMD", "lsof", "-t", "-i:3001"]
-      timeout: 10s
-      retries: 5
+      - MONGO_URI=mongodb://mongodb:27017/CarShop
 
   mongodb:
-  image: mongo:5.0.7
-  container_name: car_shop_db
-  restart: always
-  ports:
-    # Garanta que não haverá conflitos de porta com um mongodb que esteja
-    # rodando localmente
-    - 27017:27017
+    image: mongo:5.0.7
+    container_name: nerdivia_db
+    restart: always
+    ports:
+      - 27017:27017
