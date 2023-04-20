@@ -1,7 +1,7 @@
 # Usar a imagem node:16.14-alpine como base
 FROM node:16.14-alpine
 
-WORKDIR /server-backend
+WORKDIR /server
 
 COPY package*.json ./
 
