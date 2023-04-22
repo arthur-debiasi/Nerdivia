@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": ".",
     "target": "es2019",
     "module": "commonjs",
-    "rootDir": "./",
     "typeRoots": [
       "src/@types",
       "./node_modules/@types"
     ],
-    "outDir": "./dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
