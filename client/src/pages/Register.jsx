@@ -5,7 +5,7 @@ function Register() {
   const {
     queryData: { email, password, name },
     handleChange,
-    handleSubmit,
+    handleRegister,
   } = useContext(AppContext);
   return (
     <div>
@@ -26,7 +26,7 @@ function Register() {
           {' '}
           <input type="password" name="password" onChange={handleChange} value={password} />
         </label>
-        <button type="button" onClick={handleSubmit}>Criar</button>
+        <button type="button" onClick={handleRegister}>Criar</button>
       </form>
     </div>
   );
